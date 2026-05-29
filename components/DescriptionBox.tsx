@@ -10,7 +10,7 @@ function parseDescription(text: string) {
     body = text.slice('SPECIFICATIONS'.length);
 
     // Extract key: value pairs until we hit long-form marketing sentences
-    const specPattern = /([A-Za-z][A-Za-z\s./0-9-]*?):\s*(.*?)(?=(?:[A-Za-z][A-Za-z\s./0-9-]*?):|\s{2,}|$)/gs;
+    const specPattern = /([A-Za-z][A-Za-z\s./0-9-]*?):\s*(.*?)(?=(?:[A-Za-z][A-Za-z\s./0-9-]*?):|\s{2,}|$)/g;
     let match;
     let lastValidEnd = 0;
 
