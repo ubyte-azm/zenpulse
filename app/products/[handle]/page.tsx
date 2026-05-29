@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import DescriptionBox from '@/components/DescriptionBox';
 
 export default function ProductPage() {
   const { handle } = useParams<{ handle: string }>();
@@ -51,16 +52,11 @@ export default function ProductPage() {
 
         {/* Info */}
         <div className="sticky top-8 self-start space-y-6">
-          <h1 className="text-3xl font-bold">{product.title}</h1>
-          <p className="text-2xl font-semibold text-gray-800">
-            {selectedVariant?.price?.currencyCode}{' '}
-            {parseFloat(selectedVariant?.price?.amount || 0).toFixed(2)}
-          </p>
-          <p className="text-gray-600 leading-relaxed">{product.description}</p>
+          <h1 className="text-2xl font-bold leading-snug">{product.title}</h1>
 
           {variants.length > 1 && (
             <div>
-              <p className="font-medium mb-2">Variant</p>
+              <p className="font-medium mb-2 text-sm">Variant</p>
               <div className="flex flex-wrap gap-2">
                 {variants.map((v: any) => (
                   <button
@@ -80,6 +76,16 @@ export default function ProductPage() {
             </div>
           )}
 
+          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+            <p className="text-3xl font-bold text-gray-900">
+              {selectedVariant?.price?.currencyCode === 'USD' ? '$' : selectedVariant?.price?.currencyCode + ' '}
+              {parseFloat(selectedVariant?.price?.amount || 0).toFixed(2)}
+            </p>
+            {selectedVariant?.availableForSale === false && (
+              <span className="text-sm text-red-500 font-medium">Out of stock</span>
+            )}
+          </div>
+
           <button
             onClick={addToCart}
             disabled={adding || !selectedVariant?.availableForSale}
@@ -93,6 +99,8 @@ export default function ProductPage() {
               Checkout →
             </a>
           )}
+
+          <DescriptionBox text={product.description} />
         </div>
       </div>
     </main>
